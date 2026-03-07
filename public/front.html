@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupCrud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style> body { font-family: 'Inter', sans-serif; background-color: #f8fafc; } </style>
+</head>
+<body class="text-slate-800 h-screen overflow-hidden flex flex-col">
+
+    <header class="bg-white border-b border-slate-200 h-14 flex items-center justify-between px-6 shrink-0">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
+            <span class="font-bold text-lg">SupCrud</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-sm text-slate-500">Workspace: <strong class="text-slate-800">Acme Corp</strong></span>
+            <div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300"></div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <aside class="w-64 bg-slate-50 border-r border-slate-200 p-4 flex flex-col gap-2 shrink-0">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 bg-indigo-50 text-indigo-700 rounded-md text-sm font-medium">
+                <i class="fa-solid fa-inbox w-4 text-center"></i> Tickets
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md text-sm font-medium transition">
+                <i class="fa-solid fa-users w-4 text-center"></i> Agentes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md text-sm font-medium transition">
+                <i class="fa-solid fa-puzzle-piece w-4 text-center"></i> Add-ons <span class="ml-auto bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full">Activos</span>
+            </a>
+        </aside>
+
+        <main class="flex-1 p-8 overflow-y-auto bg-white">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold">Bandeja de Tickets</h1>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Buscar referenceCode..." class="border border-slate-200 rounded-md px-3 py-1.5 text-sm w-64 focus:outline-none focus:border-indigo-500">
+                    <button class="border border-slate-200 px-3 py-1.5 rounded-md text-sm hover:bg-slate-50"><i class="fa-solid fa-filter"></i></button>
+                </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
+                        <tr>
+                            <th class="px-4 py-3">Ref</th>
+                            <th class="px-4 py-3">Tipo</th>
+                            <th class="px-4 py-3">Asunto</th>
+                            <th class="px-4 py-3">Estado</th>
+                            <th class="px-4 py-3">Agente</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50 cursor-pointer">
+                            <td class="px-4 py-3 font-mono text-xs text-slate-500">#PQ-89X</td>
+                            <td class="px-4 py-3"><span class="bg-red-50 text-red-600 border border-red-100 px-2 py-0.5 rounded text-xs font-bold">Q</span></td>
+                            <td class="px-4 py-3 font-medium">Problema con acceso</td>
+                            <td class="px-4 py-3"><span class="w-2 h-2 inline-block rounded-full bg-yellow-400 mr-1"></span> IN_PROGRESS</td>
+                            <td class="px-4 py-3"><i class="fa-solid fa-wand-magic-sparkles text-purple-500 text-xs mr-1"></i> Juan E.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 cursor-pointer">
+                            <td class="px-4 py-3 font-mono text-xs text-slate-500">#PQ-90Y</td>
+                            <td class="px-4 py-3"><span class="bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-xs font-bold">P</span></td>
+                            <td class="px-4 py-3 font-medium">Solicitud de factura <i class="fa-solid fa-paperclip text-slate-400"></i></td>
+                            <td class="px-4 py-3"><span class="w-2 h-2 inline-block rounded-full bg-blue-500 mr-1"></span> OPEN</td>
+                            <td class="px-4 py-3 text-slate-400 italic">Sin asignar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div class="fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50">
+        <div class="bg-slate-900 p-4 flex justify-between items-center">
+            <h3 class="text-white font-medium text-sm">Soporte en línea</h3>
+            <button class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="p-4 flex flex-col gap-3 bg-slate-50">
+            <select class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
+                <option>Tipo de solicitud (P,Q,R,S)...</option>
+                <option>Petición</option>
+                <option>Queja</option>
+            </select>
+            <input type="email" placeholder="Tu correo para el OTP" class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
+            <textarea rows="3" placeholder="Descripción detallada..." class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none resize-none"></textarea>
+            
+            <div class="border border-dashed border-slate-300 rounded-md p-2 text-center bg-white hover:bg-slate-50 cursor-pointer">
+                <p class="text-xs text-slate-500"><i class="fa-solid fa-cloud-arrow-up"></i> Adjuntar archivo (Cloudinary)</p>
+            </div>
+
+            <button class="w-full bg-indigo-600 text-white py-2 rounded-md text-sm font-medium hover:bg-indigo-700">Enviar Ticket</button>
+            <div class="text-center mt-1"><span class="text-[10px] text-slate-400">⚡ by SupCrud</span></div>
+        </div>
+    </div>
+</body>
+</html>

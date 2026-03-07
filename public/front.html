@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SupCrud</title>
+    <title>SupCrud - Workspace Interactivo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style> body { font-family: 'Inter', sans-serif; background-color: #f8fafc; } </style>
 </head>
-<body class="text-slate-800 h-screen overflow-hidden flex flex-col">
+<body class="text-slate-800 h-screen overflow-hidden flex flex-col relative">
 
-    <header class="bg-white border-b border-slate-200 h-14 flex items-center justify-between px-6 shrink-0">
-        <div class="flex items-center gap-2">
-            <div class="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
-            <span class="font-bold text-lg">SupCrud</span>
+    <header class="bg-white border-b border-slate-200 h-14 flex items-center justify-between px-6 shrink-0 z-10">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
+                <span class="font-bold text-lg">SupCrud</span>
+            </div>
+            <button id="btn-public-tracker" class="ml-4 text-xs bg-slate-100 hover:bg-slate-200 border border-slate-300 px-3 py-1.5 rounded-md font-medium transition">
+                <i class="fa-solid fa-magnifying-glass"></i> Probar Rastreo Público
+            </button>
         </div>
         <div class="flex items-center gap-4">
             <span class="text-sm text-slate-500">Workspace: <strong class="text-slate-800">Acme Corp</strong></span>
@@ -39,13 +44,13 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-semibold">Bandeja de Tickets</h1>
                 <div class="flex gap-2">
-                    <input type="text" placeholder="Buscar referenceCode..." class="border border-slate-200 rounded-md px-3 py-1.5 text-sm w-64 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="searchInput" placeholder="Buscar referenceCode..." class="border border-slate-200 rounded-md px-3 py-1.5 text-sm w-64 focus:outline-none focus:border-indigo-500">
                     <button class="border border-slate-200 px-3 py-1.5 rounded-md text-sm hover:bg-slate-50"><i class="fa-solid fa-filter"></i></button>
                 </div>
             </div>
 
             <div class="border border-slate-200 rounded-lg overflow-hidden">
-                <table class="w-full text-left text-sm">
+                <table class="w-full text-left text-sm" id="ticketsTable">
                     <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
                         <tr>
                             <th class="px-4 py-3">Ref</th>
@@ -56,17 +61,17 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        <tr class="hover:bg-slate-50 cursor-pointer">
-                            <td class="px-4 py-3 font-mono text-xs text-slate-500">#PQ-89X</td>
+                        <tr class="hover:bg-slate-50 cursor-pointer ticket-row" data-ref="#REF-A839K">
+                            <td class="px-4 py-3 font-mono text-xs text-slate-500 ref-code">#REF-A839K</td>
                             <td class="px-4 py-3"><span class="bg-red-50 text-red-600 border border-red-100 px-2 py-0.5 rounded text-xs font-bold">Q</span></td>
-                            <td class="px-4 py-3 font-medium">Problema con acceso</td>
+                            <td class="px-4 py-3 font-medium ticket-subject">Servicio interrumpido</td>
                             <td class="px-4 py-3"><span class="w-2 h-2 inline-block rounded-full bg-yellow-400 mr-1"></span> IN_PROGRESS</td>
-                            <td class="px-4 py-3"><i class="fa-solid fa-wand-magic-sparkles text-purple-500 text-xs mr-1"></i> Juan E.</td>
+                            <td class="px-4 py-3"><i class="fa-solid fa-wand-magic-sparkles text-purple-500 text-xs mr-1" title="Asignado por IA"></i> Juan E.</td>
                         </tr>
-                        <tr class="hover:bg-slate-50 cursor-pointer">
-                            <td class="px-4 py-3 font-mono text-xs text-slate-500">#PQ-90Y</td>
+                        <tr class="hover:bg-slate-50 cursor-pointer ticket-row" data-ref="#REF-M921L">
+                            <td class="px-4 py-3 font-mono text-xs text-slate-500 ref-code">#REF-M921L</td>
                             <td class="px-4 py-3"><span class="bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-xs font-bold">P</span></td>
-                            <td class="px-4 py-3 font-medium">Solicitud de factura <i class="fa-solid fa-paperclip text-slate-400"></i></td>
+                            <td class="px-4 py-3 font-medium ticket-subject">Solicitud de factura <i class="fa-solid fa-paperclip text-slate-400"></i></td>
                             <td class="px-4 py-3"><span class="w-2 h-2 inline-block rounded-full bg-blue-500 mr-1"></span> OPEN</td>
                             <td class="px-4 py-3 text-slate-400 italic">Sin asignar</td>
                         </tr>
@@ -76,27 +81,156 @@
         </main>
     </div>
 
-    <div class="fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50">
+    <div id="widgetContainer" class="fixed bottom-6 right-6 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-40 transition-all duration-300 transform scale-100 origin-bottom-right">
         <div class="bg-slate-900 p-4 flex justify-between items-center">
             <h3 class="text-white font-medium text-sm">Soporte en línea</h3>
-            <button class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <button id="closeWidget" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="p-4 flex flex-col gap-3 bg-slate-50">
-            <select class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
-                <option>Tipo de solicitud (P,Q,R,S)...</option>
-                <option>Petición</option>
-                <option>Queja</option>
+        <div class="p-4 flex flex-col gap-3 bg-slate-50" id="widgetForm">
+            <select id="w-type" class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
+                <option value="">Tipo de solicitud...</option>
+                <option value="P">Petición</option>
+                <option value="Q">Queja</option>
+                <option value="R">Reclamo</option>
+                <option value="S">Sugerencia</option>
             </select>
-            <input type="email" placeholder="Tu correo para el OTP" class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
-            <textarea rows="3" placeholder="Descripción detallada..." class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none resize-none"></textarea>
+            <input type="email" id="w-email" placeholder="Tu correo para el OTP" class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
+            <input type="text" id="w-subject" placeholder="Asunto" class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none">
+            <textarea id="w-desc" rows="3" placeholder="Descripción detallada..." class="w-full text-sm border border-slate-200 rounded-md p-2 outline-none resize-none"></textarea>
             
-            <div class="border border-dashed border-slate-300 rounded-md p-2 text-center bg-white hover:bg-slate-50 cursor-pointer">
+            <div id="w-file" class="border border-dashed border-slate-300 rounded-md p-2 text-center bg-white hover:bg-slate-50 cursor-pointer">
                 <p class="text-xs text-slate-500"><i class="fa-solid fa-cloud-arrow-up"></i> Adjuntar archivo (Cloudinary)</p>
             </div>
 
-            <button class="w-full bg-indigo-600 text-white py-2 rounded-md text-sm font-medium hover:bg-indigo-700">Enviar Ticket</button>
-            <div class="text-center mt-1"><span class="text-[10px] text-slate-400">⚡ by SupCrud</span></div>
+            <button id="w-submit" class="w-full bg-indigo-600 text-white py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition">Enviar Ticket</button>
+        </div>
+        <div id="widgetSuccess" class="hidden p-6 text-center bg-slate-50 flex-col items-center gap-3">
+            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl"><i class="fa-solid fa-check"></i></div>
+            <h4 class="font-semibold text-slate-800">¡Ticket creado!</h4>
+            <p class="text-xs text-slate-500">Guarda este código para rastrear tu solicitud:</p>
+            <div class="bg-white border border-slate-200 px-3 py-2 rounded font-mono text-indigo-600 font-bold tracking-wider" id="generatedRefCode"></div>
+            <button id="w-reset" class="text-xs text-indigo-600 hover:underline mt-2">Crear otro ticket</button>
         </div>
     </div>
+
+    <button id="reopenWidget" class="hidden fixed bottom-6 right-6 w-14 h-14 bg-slate-900 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform z-30">
+        <i class="fa-solid fa-headset text-xl"></i>
+    </button>
+
+
+    <div id="ticketModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-300" id="ticketModalContent">
+            
+            <div class="border-b border-slate-200 p-4 flex justify-between items-center bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <span class="font-mono text-sm text-slate-500 font-semibold" id="m-refcode">#REF-XXX</span>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded font-medium border border-yellow-200">IN_PROGRESS</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded hover:bg-indigo-100 transition">
+                        <i class="fa-solid fa-robot"></i> Analizar con IA
+                    </button>
+                    <button id="closeTicketModal" class="text-slate-400 hover:text-slate-800 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+                <div class="bg-purple-50 border border-purple-100 rounded-lg p-4 flex items-start gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-500 mt-1"></i>
+                    <div>
+                        <h5 class="text-xs font-bold text-purple-900 uppercase mb-1">Sugerencias de IA (Auto-Assign OFF)</h5>
+                        <p class="text-sm text-purple-800 mb-2">Basado en el texto, este ticket parece urgente y relacionado con facturación.</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs bg-white border border-purple-200 text-purple-700 px-2 py-1 rounded cursor-pointer hover:bg-purple-100">Etiqueta: Facturación +</span>
+                            <span class="text-xs bg-white border border-purple-200 text-purple-700 px-2 py-1 rounded cursor-pointer hover:bg-purple-100">Prioridad: Alta +</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-1" id="m-subject">Título del Ticket</h2>
+                    <p class="text-sm text-slate-500 mb-4">De: cliente@email.com • Creado hace 2 horas</p>
+                    <div class="bg-slate-50 border border-slate-200 rounded p-4 text-sm text-slate-700 leading-relaxed">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Necesito ayuda con este problema urgente. Adjunto la captura de pantalla del error que me aparece en el sistema.
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-semibold text-slate-700 mb-2">Archivos Adjuntos (Cloudinary)</h4>
+                    <div class="flex gap-3">
+                        <div class="border border-slate-200 rounded p-2 flex items-center gap-2 w-48 hover:bg-slate-50 cursor-pointer">
+                            <i class="fa-solid fa-image text-indigo-500 text-xl"></i>
+                            <div class="overflow-hidden">
+                                <p class="text-xs font-medium text-slate-700 truncate">error_pantalla.png</p>
+                                <p class="text-[10px] text-slate-400">1.2 MB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-4 border-t border-slate-100">
+                    <textarea rows="3" class="w-full border border-slate-200 rounded-md p-3 text-sm focus:outline-none focus:border-indigo-500 mb-2 resize-none" placeholder="Escribe tu respuesta pública aquí..."></textarea>
+                    <div class="flex justify-between items-center">
+                        <button class="text-slate-500 hover:text-slate-800 text-sm"><i class="fa-solid fa-paperclip"></i> Adjuntar</button>
+                        <div class="flex gap-2">
+                            <select class="text-sm border border-slate-200 rounded-md px-3 py-1.5 outline-none">
+                                <option>Resolver ticket</option>
+                                <option>Mantener abierto</option>
+                            </select>
+                            <button class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-sm font-medium hover:bg-indigo-700">Enviar Respuesta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="trackerModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden relative">
+            <button id="closeTracker" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div id="trackerStep1" class="p-8">
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xl mx-auto mb-3"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h3 class="text-xl font-bold text-slate-800">Rastrear Ticket</h3>
+                    <p class="text-sm text-slate-500">Ingresa tu código de referencia global</p>
+                </div>
+                <input type="text" id="publicRefCode" placeholder="Ej: #REF-A839K" class="w-full font-mono text-center border border-slate-300 rounded-md p-3 mb-4 focus:outline-none focus:border-indigo-500 uppercase">
+                <button id="btnSearchTicket" class="w-full bg-dark text-white py-3 rounded-md font-medium hover:bg-slate-800 transition">Buscar Ticket</button>
+            </div>
+
+            <div id="trackerStep2" class="hidden p-8">
+                <div class="mb-4">
+                    <span class="text-xs text-slate-400 font-mono">#REF-A839K</span>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Servicio interrumpido</h3>
+                    <div class="flex items-center gap-4 text-sm">
+                        <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs font-bold border border-yellow-200">IN_PROGRESS</span>
+                        <span class="text-slate-500"><i class="fa-regular fa-clock"></i> Actualizado hoy</span>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 text-center mt-6">
+                    <i class="fa-solid fa-lock text-slate-400 mb-2 text-xl"></i>
+                    <p class="text-sm text-slate-600 mb-4">Para ver la conversación completa y los adjuntos, necesitamos verificar tu identidad.</p>
+                    <button id="btnRequestOtp" class="w-full bg-indigo-600 text-white py-2 rounded-md font-medium hover:bg-indigo-700 transition">Enviar OTP a mi correo</button>
+                </div>
+            </div>
+
+            <div id="trackerStep3" class="hidden p-8 text-center">
+                <h3 class="text-lg font-bold text-slate-800 mb-2">Ingresa el código OTP</h3>
+                <p class="text-sm text-slate-500 mb-6">Hemos enviado un código temporal a tu correo electrónico.</p>
+                <div class="flex justify-center gap-2 mb-6">
+                    <input type="text" maxlength="1" class="w-10 h-12 text-center text-xl font-bold border border-slate-300 rounded focus:border-indigo-500 focus:outline-none">
+                    <input type="text" maxlength="1" class="w-10 h-12 text-center text-xl font-bold border border-slate-300 rounded focus:border-indigo-500 focus:outline-none">
+                    <input type="text" maxlength="1" class="w-10 h-12 text-center text-xl font-bold border border-slate-300 rounded focus:border-indigo-500 focus:outline-none">
+                    <input type="text" maxlength="1" class="w-10 h-12 text-center text-xl font-bold border border-slate-300 rounded focus:border-indigo-500 focus:outline-none">
+                </div>
+                <button class="w-full bg-green-600 text-white py-2 rounded-md font-medium hover:bg-green-700 transition">Validar y Acceder</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/front.js"></script>
 </body>
 </html>

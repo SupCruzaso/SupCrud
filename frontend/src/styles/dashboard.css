@@ -1,7 +1,7 @@
 body {
   background: #0c0e14;
   color: #e8eaf6;
-  font-family: 'DM Mono', monospace;
+  font-family: "DM Mono", monospace;
 }
 
 /* ── Layout ─────────────────────────────────────────────── */
@@ -64,10 +64,12 @@ body {
   padding: 0.6rem 0.75rem;
   border-radius: 8px;
   font-size: 0.75rem;
-  font-family: 'DM Mono', monospace;
+  font-family: "DM Mono", monospace;
   color: #6b7280;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   letter-spacing: 0.03em;
   border: 1px solid transparent;
 }
@@ -85,7 +87,7 @@ body {
 
 /* Active left indicator bar */
 .nav-item.active::before {
-  content: '';
+  content: "";
   display: block;
   width: 3px;
   height: 14px;
@@ -109,12 +111,20 @@ body {
 
 /* ── Animations ─────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .fade-up {
@@ -124,10 +134,18 @@ body {
 .stat-card {
   animation: fadeUp 0.4s ease both;
 }
-.stat-card:nth-child(1) { animation-delay: 0.05s; }
-.stat-card:nth-child(2) { animation-delay: 0.10s; }
-.stat-card:nth-child(3) { animation-delay: 0.15s; }
-.stat-card:nth-child(4) { animation-delay: 0.20s; }
+.stat-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.stat-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.stat-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.stat-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
 
 /* ── Loader spinner ─────────────────────────────────────── */
 .loader {
@@ -161,7 +179,7 @@ tr.ws-row:hover td {
 
 .field-label {
   font-size: 0.7rem;
-  font-family: 'DM Mono', monospace;
+  font-family: "DM Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #6b7280;
@@ -174,7 +192,7 @@ tr.ws-row:hover td {
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   font-size: 0.8rem;
-  font-family: 'DM Mono', monospace;
+  font-family: "DM Mono", monospace;
   color: #e8eaf6;
   outline: none;
   transition: border-color 0.15s;
@@ -248,4 +266,61 @@ tr.ws-row:hover td {
   gap: 0.75rem;
   padding: 1rem 1.5rem;
   border-top: 1px solid #242840;
+}
+
+.status-OPEN {
+  background: rgba(91, 110, 245, 0.12);
+  color: #5b6ef5;
+  border-color: rgba(91, 110, 245, 0.3);
+}
+.status-IN_PROGRESS {
+  background: rgba(245, 166, 35, 0.12);
+  color: #f5a623;
+  border-color: rgba(245, 166, 35, 0.3);
+}
+.status-RESOLVED {
+  background: rgba(56, 229, 196, 0.12);
+  color: #38e5c4;
+  border-color: rgba(56, 229, 196, 0.3);
+}
+.status-CLOSED {
+  background: rgba(107, 114, 128, 0.12);
+  color: #6b7280;
+  border-color: rgba(107, 114, 128, 0.3);
+}
+.status-REOPENED {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+}
+.msg-agent {
+  background: #1a1e30;
+  border: 1px solid #242840;
+  border-radius: 0 12px 12px 12px;
+}
+.msg-user {
+  background: rgba(91, 110, 245, 0.1);
+  border: 1px solid rgba(91, 110, 245, 0.2);
+  border-radius: 12px 0 12px 12px;
+}
+.event-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+select.status-select {
+  background: #0c0e14;
+  border: 1px solid #242840;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.75rem;
+  font-family: "DM Mono", monospace;
+  color: #e8eaf6;
+  outline: none;
+  cursor: pointer;
+}
+select.status-select:focus {
+  border-color: rgba(91, 110, 245, 0.5);
 }

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SupCrud by Crudzaso — PQRS SaaS Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              mono: ["DM Mono", "monospace"],
+            },
+            colors: {
+              bg: "#0c0e14",
+              surface: "#13161f",
+              card: "#181c28",
+              border: "#242840",
+              primary: "#5b6ef5",
+              accent: "#38e5c4",
+              warn: "#f5a623",
+              info: "#64b5f6",
+              fg: "#e8eaf6",
+              muted: "#6b7280",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../../../public/assets/css/global.css" />
+    <script src="../../../tailwind.config.js"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Nav -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+          </div>
+          <span class="font-display font-bold text-fg">SupCrud</span>
+          <span class="text-xs font-mono text-muted ml-1">by Crudzaso</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="../workspace/login.html"
+            class="text-xs font-mono text-muted hover:text-fg transition-colors px-3 py-2"
+            >Login</a
+          >
+          <a
+            href="../owner/index.html"
+            class="text-xs font-mono text-muted hover:text-fg transition-colors px-3 py-2"
+            >Owner</a
+          >
+          <a
+            href="../workspace/login.html"
+            class="px-4 py-2 rounded-lg bg-primary text-white text-xs font-mono font-medium hover:bg-primary/90 transition-colors"
+            >Get Started</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section
+      class="grid-bg min-h-screen flex items-center justify-center pt-20 px-6"
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-8 fade-up"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          SaaS PQRS Management Platform
+        </div>
+        <h1
+          class="font-display text-5xl md:text-7xl font-bold text-fg mb-6 fade-up delay-1 leading-tight"
+        >
+          Support tickets,<br />
+          <span class="text-primary">simplified.</span>
+        </h1>
+        <p
+          class="text-muted font-mono text-sm md:text-base max-w-2xl mx-auto mb-10 fade-up delay-2 leading-relaxed"
+        >
+          SupCrud by Crudzaso gives your business a complete PQRS system with an
+          embeddable widget, AI-powered routing, OTP verification, and
+          multi-workspace management — all free to deploy.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-3 fade-up delay-3"
+        >
+          <a
+            href="../workspace/login.html"
+            class="px-6 py-3 rounded-xl bg-primary text-white font-mono text-sm font-medium hover:bg-primary/90 transition-colors glow"
+          >
+            Start Free →
+          </a>
+          <a
+            href="#features"
+            class="px-6 py-3 rounded-xl border border-border text-fg font-mono text-sm hover:bg-surface transition-colors"
+          >
+            See Features
+          </a>
+        </div>
+
+        <!-- Widget preview mockup -->
+        <div class="mt-20 float fade-up delay-4">
+          <div
+            class="bg-card border border-border rounded-2xl p-6 max-w-sm mx-auto text-left glow"
+          >
+            <div class="flex items-center gap-2 mb-4">
+              <div
+                class="w-6 h-6 rounded bg-primary/20 border border-primary/30 flex items-center justify-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </div>
+              <span class="font-display font-bold text-xs text-fg"
+                >SupCrud Widget</span
+              >
+              <span class="ml-auto w-2 h-2 rounded-full bg-accent"></span>
+            </div>
+            <div class="space-y-2">
+              <div
+                class="h-8 rounded bg-surface border border-border flex items-center px-3"
+              >
+                <span class="text-muted text-xs font-mono">Your email...</span>
+              </div>
+              <div
+                class="h-8 rounded bg-surface border border-border flex items-center px-3"
+              >
+                <span class="text-muted text-xs font-mono">Subject...</span>
+              </div>
+              <div
+                class="h-16 rounded bg-surface border border-border flex items-start p-3"
+              >
+                <span class="text-muted text-xs font-mono">Description...</span>
+              </div>
+              <div class="flex gap-2">
+                <span
+                  class="px-2 py-1 rounded border border-border text-[10px] font-mono text-muted"
+                  >P</span
+                >
+                <span
+                  class="px-2 py-1 rounded border border-primary/40 bg-primary/10 text-[10px] font-mono text-primary"
+                  >Q</span
+                >
+                <span
+                  class="px-2 py-1 rounded border border-border text-[10px] font-mono text-muted"
+                  >R</span
+                >
+                <span
+                  class="px-2 py-1 rounded border border-border text-[10px] font-mono text-muted"
+                  >S</span
+                >
+              </div>
+              <div
+                class="h-8 rounded bg-primary flex items-center justify-center"
+              >
+                <span class="text-white text-xs font-mono font-medium"
+                  >Submit Ticket</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-24 px-6 max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs font-mono text-muted uppercase tracking-widest mb-2">
+          Why SupCrud
+        </p>
+        <h2 class="font-display text-4xl font-bold text-fg">
+          Everything you need
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature cards -->
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">
+            Embeddable Widget
+          </h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            One JS snippet. Works on any website. Customers submit tickets
+            without creating an account.
+          </p>
+        </div>
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-accent/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">
+            OTP Verification
+          </h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            Customers access full ticket details with a one-time code sent to
+            their email. Zero passwords.
+          </p>
+        </div>
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-warn/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-warn/10 border border-warn/20 flex items-center justify-center text-warn mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">AI Assist</h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            OpenAI classifies tickets, suggests priority, tags, and auto-assigns
+            to the right agent.
+          </p>
+        </div>
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-info/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-info/10 border border-info/20 flex items-center justify-center text-info mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">
+            Multi-Workspace
+          </h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            Manage multiple client businesses in isolation. Each workspace has
+            its own agents and settings.
+          </p>
+        </div>
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">
+            File Attachments
+          </h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            Cloudinary-powered attachment add-on. Customers attach screenshots,
+            agents share documents.
+          </p>
+        </div>
+        <div
+          class="bg-card border border-border rounded-xl p-6 hover:border-accent/30 transition-colors"
+        >
+          <div
+            class="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+          </div>
+          <h3 class="font-display font-semibold text-fg mb-2">
+            Public Ticket Tracking
+          </h3>
+          <p class="text-muted text-xs font-mono leading-relaxed">
+            Customers track status with just a reference code. No login required
+            for basic status check.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6 border-t border-border">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="font-display text-4xl font-bold text-fg mb-4">
+          Ready to start?
+        </h2>
+        <p class="text-muted font-mono text-sm mb-8">
+          Free. Open source. Deploy in minutes.
+        </p>
+        <a
+          href="../workspace/login.html"
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary text-white font-mono text-sm font-medium hover:bg-primary/90 transition-colors glow"
+        >
+          Create your workspace →
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-border py-8 px-6">
+      <div
+        class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="w-5 h-5 rounded bg-primary flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+          </div>
+          <span class="font-display font-bold text-xs text-fg"
+            >SupCrud by Crudzaso</span
+          >
+        </div>
+        <p class="text-muted font-mono text-xs">
+          Built with ❤ by Team Crudzaso
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

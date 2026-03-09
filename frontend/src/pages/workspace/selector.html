@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Workspace — SupCrud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              mono: ["DM Mono", "monospace"],
+            },
+            colors: {
+              bg: "#0c0e14",
+              surface: "#13161f",
+              card: "#181c28",
+              border: "#242840",
+              primary: "#5b6ef5",
+              accent: "#38e5c4",
+              warn: "#f5a623",
+              info: "#64b5f6",
+              fg: "#e8eaf6",
+              muted: "#6b7280",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../../../public/assets/css/global.css" />
+  </head>
+  <body
+    class="min-h-screen grid-bg flex items-center justify-center px-6 py-16"
+  >
+    <div class="w-full max-w-lg">
+      <!-- Header -->
+      <div class="text-center mb-10 fade-up">
+        <div
+          class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary mb-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </div>
+        <h1 class="font-display text-2xl font-bold text-fg">
+          Select Workspace
+        </h1>
+        <p class="text-muted text-xs font-mono mt-2">
+          You belong to multiple workspaces. Choose one to continue.
+        </p>
+      </div>
+
+      <!-- Workspace list -->
+      <div id="ws-list" class="space-y-3 mb-8"></div>
+
+      <!-- Footer -->
+      <p class="text-center text-xs font-mono text-muted">
+        Not your account?
+        <a href="login.html" class="text-primary hover:underline">Sign out</a>
+      </p>
+    </div>
+
+    <script src="../../../public/assets/js/utils.js"></script>
+    <script src="../../../public/assets/js/workspace-selector.js"></script>
+    <script src="../../scripts/auth-guard.js"></script>
+    <script src="../../scripts/api.js"></script>
+  </body>
+</html>

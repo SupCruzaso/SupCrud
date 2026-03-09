@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SupCrud | Customer Support Widget Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #0a0a0c;
+        color: #e4e4e7;
+      }
+      .glass-card {
+        background: rgba(23, 23, 27, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      code {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .fade-up {
+        animation: fadeUp 0.8s ease-out forwards;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center justify-center p-6">
+    <div
+      class="max-w-2xl w-full glass-card rounded-3xl p-8 md:p-12 shadow-2xl fade-up"
+    >
+      <div class="flex items-center gap-3 mb-6">
+        <div
+          class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.4)]"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-white">
+          SupCrud Widget <span class="text-indigo-500">Preview</span>
+        </h1>
+      </div>
+
+      <p class="text-zinc-400 mb-8 leading-relaxed">
+        This is the final customer interface. The widget in the bottom-right
+        corner allows your users to submit
+        <span class="text-indigo-400 font-medium">PQRS</span> (Tickets) and
+        track them in real-time powered by our AI engine.
+      </p>
+
+      <div class="space-y-6">
+        <div class="bg-black/40 rounded-2xl p-6 border border-white/5">
+          <h2
+            class="text-xs font-bold uppercase tracking-[0.2em] text-indigo-400 mb-4"
+          >
+            Production Installation
+          </h2>
+          <p class="text-sm text-zinc-500 mb-4">
+            Copy this script before the closing
+            <code class="text-indigo-300">&lt;/body&gt;</code> tag of any
+            website:
+          </p>
+
+          <div class="relative group">
+            <pre
+              class="bg-[#0f0f13] p-5 rounded-xl text-xs overflow-x-auto border border-white/5 text-zinc-300 leading-6"
+            >
+<span class="text-indigo-400">&lt;script</span>
+  <span class="text-zinc-500">id</span>=<span class="text-emerald-400">"supcrud-script"</span>
+  <span class="text-zinc-500">src</span>=<span class="text-emerald-400">"https://cdn.supcrud.com/widget.js"</span>
+  <span class="text-zinc-500">data-workspace</span>=<span class="text-emerald-400">"YOUR_WORKSPACE_ID"</span>
+  <span class="text-zinc-500">data-api</span>=<span class="text-emerald-400">"http://localhost:3000/api/v1"</span>
+  <span class="text-zinc-500">data-color</span>=<span class="text-emerald-400">"#4f46e5"</span>
+<span class="text-indigo-400">&gt;&lt;/script&gt;</span></pre>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs text-zinc-500 font-mono">
+          <span class="flex items-center gap-2"
+            ><span
+              class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+            ></span>
+            System Online</span
+          >
+          <span class="flex items-center gap-2"
+            ><span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+            PostgreSQL/Mongo Active</span
+          >
+        </div>
+      </div>
+
+      <footer class="mt-12 pt-8 border-t border-white/5 text-center">
+        <p
+          class="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold"
+        >
+          SupCrud by Team Crudzaso · Riwi 2026
+        </p>
+      </footer>
+    </div>
+
+    <script
+      src="../public/assets/js/widget.js"
+      id="supcrud-script"
+      data-workspace="REPLACE_WITH_YOUR_ACTUAL_WORKSPACE_ID"
+      data-api="http://localhost:3000/api/v1"
+      data-color="#4f46e5"
+    ></script>
+  </body>
+</html>

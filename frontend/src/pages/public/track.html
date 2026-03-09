@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Ticket — SupCrud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              mono: ["DM Mono", "monospace"],
+            },
+            colors: {
+              bg: "#0c0e14",
+              surface: "#13161f",
+              card: "#181c28",
+              border: "#242840",
+              primary: "#5b6ef5",
+              accent: "#38e5c4",
+              warn: "#f5a623",
+              info: "#64b5f6",
+              fg: "#e8eaf6",
+              muted: "#6b7280",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../../../public/assets/css/track.css" />
+  </head>
+  <body class="min-h-screen grid-bg py-16 px-6">
+    <!-- Nav -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md"
+    >
+      <div
+        class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="w-6 h-6 rounded bg-primary flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3.5 w-3.5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+          </div>
+          <span class="font-display font-bold text-fg text-sm">SupCrud</span>
+        </div>
+        <span class="text-xs font-mono text-muted">Public Ticket Tracker</span>
+      </div>
+    </nav>
+
+    <div class="max-w-xl mx-auto mt-12">
+      <!-- Search box -->
+      <div id="search-box" class="fade-up">
+        <div class="text-center mb-10">
+          <div
+            class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 mb-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+          </div>
+          <h1 class="font-display text-3xl font-bold text-fg mb-2">
+            Track Your Ticket
+          </h1>
+          <p class="text-muted text-xs font-mono">
+            Enter your reference code to check ticket status
+          </p>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-6 space-y-4">
+          <div>
+            <label
+              class="block text-[10px] font-mono text-muted uppercase tracking-widest mb-1.5"
+              >Reference Code</label
+            >
+            <input
+              id="ref-input"
+              type="text"
+              placeholder="e.g. ACM-2024-001"
+              class="field-input text-center tracking-widest text-lg"
+            />
+          </div>
+          <p
+            id="search-error"
+            style="display: none"
+            class="text-red-400 text-xs font-mono text-center"
+          >
+            Ticket not found. Check your code and try again.
+          </p>
+          <button
+            id="search-btn"
+            class="w-full py-3 rounded-lg bg-primary text-white font-mono text-sm font-medium hover:bg-primary/90 transition-colors"
+          >
+            Find Ticket →
+          </button>
+        </div>
+      </div>
+
+      <!-- Basic view (no OTP) -->
+      <div id="view-basic" class="fade-up space-y-4">
+        <button
+          id="back-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-fg transition-colors mb-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Search again
+        </button>
+
+        <div class="bg-card border border-border rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <code
+                class="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20"
+                id="basic-ref"
+              ></code>
+              <h2
+                class="font-display text-xl font-bold text-fg mt-2"
+                id="basic-subject"
+              ></h2>
+            </div>
+            <span id="basic-status" class="status-pill"></span>
+          </div>
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-border">
+            <div>
+              <p
+                class="text-[10px] font-mono text-muted uppercase tracking-widest mb-1"
+              >
+                Created
+              </p>
+              <p class="text-sm font-mono text-fg" id="basic-created"></p>
+            </div>
+            <div>
+              <p
+                class="text-[10px] font-mono text-muted uppercase tracking-widest mb-1"
+              >
+                Last Updated
+              </p>
+              <p class="text-sm font-mono text-fg" id="basic-updated"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="font-display font-semibold text-fg text-sm mb-2">
+            Want full details?
+          </h3>
+          <p class="text-xs font-mono text-muted mb-4">
+            Verify your identity with a one-time code sent to the email
+            associated with this ticket.
+          </p>
+          <button
+            id="request-otp-btn"
+            class="w-full py-2.5 rounded-lg bg-accent/10 text-accent border border-accent/25 font-mono text-sm font-medium hover:bg-accent/20 transition-colors"
+          >
+            Send me a verification code
+          </button>
+        </div>
+      </div>
+
+      <!-- OTP entry -->
+      <div id="view-otp" class="fade-up">
+        <div
+          class="bg-card border border-border rounded-2xl p-6 text-center space-y-6"
+        >
+          <div>
+            <div
+              class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 mb-4"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 text-accent"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <h2 class="font-display text-xl font-bold text-fg">
+              Check your email
+            </h2>
+            <p class="text-xs font-mono text-muted mt-2">
+              We sent a 6-digit code to
+              <span id="otp-email-hint" class="text-fg">u****@acme.com</span>
+            </p>
+          </div>
+
+          <!-- OTP inputs -->
+          <div class="flex justify-center gap-2" id="otp-inputs">
+            <input type="text" maxlength="1" class="otp-input" data-idx="0" />
+            <input type="text" maxlength="1" class="otp-input" data-idx="1" />
+            <input type="text" maxlength="1" class="otp-input" data-idx="2" />
+            <input type="text" maxlength="1" class="otp-input" data-idx="3" />
+            <input type="text" maxlength="1" class="otp-input" data-idx="4" />
+            <input type="text" maxlength="1" class="otp-input" data-idx="5" />
+          </div>
+
+          <p
+            id="otp-error"
+            style="display: none"
+            class="text-red-400 text-xs font-mono"
+          >
+            Invalid code. Please try again.
+          </p>
+          <p id="otp-timer" class="text-xs font-mono text-muted">
+            Code expires in <span id="countdown">05:00</span>
+          </p>
+
+          <button
+            id="verify-otp-btn"
+            class="w-full py-2.5 rounded-lg bg-primary text-white font-mono text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-40"
+            disabled
+          >
+            Verify Code
+          </button>
+
+          <div
+            class="flex items-center justify-center gap-4 pt-2 border-t border-border"
+          >
+            <button
+              id="resend-otp"
+              class="text-xs font-mono text-muted hover:text-fg transition-colors"
+            >
+              Resend code
+            </button>
+            <span class="text-muted text-xs">·</span>
+            <button
+              id="back-to-basic"
+              class="text-xs font-mono text-muted hover:text-fg transition-colors"
+            >
+              Go back
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full view (after OTP) -->
+      <div id="view-full" class="fade-up space-y-4">
+        <button
+          id="back-to-basic2"
+          class="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-fg transition-colors mb-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back to basic view
+        </button>
+
+        <div class="bg-card border border-border rounded-2xl p-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <code
+                class="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20"
+                >ACM-2024-001</code
+              >
+              <h2 class="font-display text-xl font-bold text-fg mt-2">
+                Cannot login to portal
+              </h2>
+            </div>
+            <span
+              class="status-pill bg-primary/10 text-primary border border-primary/25"
+              >OPEN</span
+            >
+          </div>
+          <div
+            class="grid grid-cols-2 gap-4 pt-4 border-t border-border text-xs font-mono"
+          >
+            <div>
+              <p class="text-muted mb-1 text-[10px] uppercase tracking-wider">
+                Created
+              </p>
+              <p class="text-fg">Jan 15, 2024</p>
+            </div>
+            <div>
+              <p class="text-muted mb-1 text-[10px] uppercase tracking-wider">
+                Updated
+              </p>
+              <p class="text-fg">Jan 15, 2024</p>
+            </div>
+            <div>
+              <p class="text-muted mb-1 text-[10px] uppercase tracking-wider">
+                Assigned To
+              </p>
+              <p class="text-fg">Alice Johnson</p>
+            </div>
+            <div>
+              <p class="text-muted mb-1 text-[10px] uppercase tracking-wider">
+                Priority
+              </p>
+              <p class="text-red-400">HIGH</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conversation -->
+        <div class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="font-display font-semibold text-fg text-sm mb-4">
+            Conversation
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-[10px] font-mono text-muted mb-1">
+                You · Jan 15, 09:32
+              </p>
+              <div
+                class="p-3 rounded-xl bg-primary/8 border border-primary/15 text-sm font-mono text-fg leading-relaxed"
+              >
+                Hi, I'm unable to login to the portal since this morning...
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-mono text-muted mb-1">
+                Alice (Agent) · Jan 15, 10:15
+              </p>
+              <div
+                class="p-3 rounded-xl bg-surface border border-border text-sm font-mono text-fg leading-relaxed"
+              >
+                Hi! Thanks for reaching out. I can see the session issue. Please
+                try clearing your browser cache and cookies...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event history -->
+        <div class="bg-card border border-border rounded-2xl p-6">
+          <h3 class="font-display font-semibold text-fg text-sm mb-4">
+            Event History
+          </h3>
+          <div class="space-y-4">
+            <div class="event-line">
+              <p class="text-xs font-mono text-fg">Ticket created</p>
+              <p class="text-[10px] font-mono text-muted mt-0.5">
+                Jan 15, 09:32
+              </p>
+            </div>
+            <div class="event-line">
+              <p class="text-xs font-mono text-fg">Assigned to Alice Johnson</p>
+              <p class="text-[10px] font-mono text-muted mt-0.5">
+                Jan 15, 09:33
+              </p>
+            </div>
+            <div class="event-line">
+              <p class="text-xs font-mono text-fg">Status → IN_PROGRESS</p>
+              <p class="text-[10px] font-mono text-muted mt-0.5">
+                Jan 15, 10:16
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../public/assets/js/track.js"></script>
+  </body>
+</html>

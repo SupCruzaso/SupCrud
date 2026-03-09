@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Detail — SupCrud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              mono: ["DM Mono", "monospace"],
+            },
+            colors: {
+              bg: "#0c0e14",
+              surface: "#13161f",
+              card: "#181c28",
+              border: "#242840",
+              primary: "#5b6ef5",
+              accent: "#38e5c4",
+              warn: "#f5a623",
+              info: "#64b5f6",
+              fg: "#e8eaf6",
+              muted: "#6b7280",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../../styles/dashboard.css" />
+  </head>
+  <body class="min-h-screen flex">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </div>
+        <span class="font-display font-bold text-fg text-sm">SupCrud</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a1 1 0 001 1h1a1 1 0 011 1v3a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 011-1h1a1 1 0 001-1V7a2 2 0 00-2-2H5z"
+            />
+          </svg>
+          <span>Tickets</span>
+        </a>
+        <a href="agents.html" class="nav-item">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+          <span>Agents</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="login.html" class="nav-item nav-item-logout">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="mb-6 fade-up">
+        <a
+          href="dashboard.html"
+          class="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-fg transition-colors mb-4"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back to inbox
+        </a>
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <code
+              id="ticket-ref"
+              class="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20"
+              >LOADING...</code
+            >
+            <h1
+              id="ticket-title"
+              class="font-display text-2xl font-bold text-fg mt-2"
+            >
+              Loading ticket...
+            </h1>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <select id="status-select" class="status-select">
+              <option value="OPEN">OPEN</option>
+              <option value="IN_PROGRESS">IN PROGRESS</option>
+              <option value="RESOLVED">RESOLVED</option>
+              <option value="CLOSED">CLOSED</option>
+              <option value="REOPENED">REOPENED</option>
+            </select>
+            <button
+              id="save-status"
+              class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-primary text-white hover:bg-primary/90 transition-colors"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-4">
+          <div
+            id="conversation-container"
+            class="bg-card border border-border rounded-xl p-5 space-y-4"
+          >
+            <h2
+              class="font-display font-semibold text-fg text-sm uppercase tracking-wider text-muted text-[11px]"
+            >
+              Conversation
+            </h2>
+            <div class="flex justify-center py-10">
+              <div
+                class="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full"
+              ></div>
+            </div>
+          </div>
+
+          <div class="bg-card border border-border rounded-xl p-5">
+            <h2
+              class="font-display font-semibold text-fg text-[11px] uppercase tracking-wider text-muted mb-3"
+            >
+              Reply
+            </h2>
+            <textarea
+              id="reply-text"
+              rows="4"
+              placeholder="Type your response..."
+              class="w-full bg-bg border border-border rounded-lg p-3 text-sm font-mono text-fg placeholder-muted outline-none focus:border-primary/50 transition-colors resize-none"
+            ></textarea>
+            <div class="flex items-center justify-between mt-3">
+              <button
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-mono text-muted hover:bg-surface transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3.5 w-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                  />
+                </svg>
+                Attach
+              </button>
+              <button
+                id="send-reply"
+                class="px-4 py-1.5 rounded-lg bg-primary text-white text-xs font-mono font-medium hover:bg-primary/90 transition-colors"
+              >
+                Send Reply
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-card border border-border rounded-xl p-5 space-y-4">
+            <h2
+              class="font-display font-semibold text-fg text-[11px] uppercase tracking-wider text-muted"
+            >
+              Details
+            </h2>
+            <div id="ticket-details-list" class="space-y-3"></div>
+          </div>
+
+          <div class="bg-card border border-border rounded-xl p-5 space-y-3">
+            <h2
+              class="font-display font-semibold text-fg text-[11px] uppercase tracking-wider text-muted"
+            >
+              Assignment
+            </h2>
+            <div id="current-agent-card"></div>
+            <select id="assign-agent" class="status-select w-full">
+              <option value="">Reassign to...</option>
+            </select>
+            <button
+              id="do-assign"
+              class="w-full py-1.5 rounded-lg text-xs font-mono font-medium border border-border text-muted hover:bg-surface transition-colors"
+            >
+              Reassign
+            </button>
+          </div>
+
+          <div
+            id="ai-container"
+            class="bg-card border border-primary/20 rounded-xl p-5 space-y-3 hidden"
+          >
+            <div class="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+              <h2
+                class="font-display font-semibold text-fg text-[11px] uppercase tracking-wider text-primary"
+              >
+                AI Suggestions
+              </h2>
+            </div>
+            <div id="ai-content" class="space-y-2"></div>
+            <button
+              id="apply-ai"
+              class="w-full py-1.5 rounded-lg text-xs font-mono font-medium bg-primary/10 text-primary border border-primary/25 hover:bg-primary/20 transition-colors"
+            >
+              Apply Suggestions
+            </button>
+          </div>
+
+          <div class="bg-card border border-border rounded-xl p-5">
+            <h2
+              class="font-display font-semibold text-fg text-[11px] uppercase tracking-wider text-muted mb-4"
+            >
+              History
+            </h2>
+            <div class="space-y-3" id="event-list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="../../../public/assets/js/ticket-detail.js"></script>
+    <script src="../../scripts/api.js"></script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Owner Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../styles/dashboard.css"/>
+  <script src="../../../tailwind.config.js"></script>
+</head>
+<body class="min-h-screen flex">
+
+  <!-- ── Sidebar ───────────────────────────────────────────── -->
+  <aside id="sidebar" class="sidebar">
+
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+      </div>
+      <span class="font-display font-bold text-fg text-sm tracking-wide">OwnPanel</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#" class="nav-item" data-page="workspaces">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+        </svg>
+        <span>Workspaces</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="#" class="nav-item nav-item-logout" id="logout-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Main ──────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Dashboard page -->
+    <div id="dashboard-page">
+
+      <div class="mb-8 fade-up">
+        <p class="text-xs text-muted uppercase tracking-[0.2em] mb-1 font-mono">System Overview</p>
+        <h1 class="font-display text-3xl font-bold text-fg">Owner Dashboard</h1>
+      </div>
+
+      <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"></div>
+
+      <div id="loader" class="flex justify-center items-center py-20 hidden">
+        <div class="loader"></div>
+      </div>
+
+      <div id="table-wrap" class="bg-card border border-border rounded-xl overflow-hidden hidden">
+        <div class="px-6 py-4 border-b border-border flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+          <h2 class="font-display font-semibold text-fg text-sm tracking-wide uppercase">All Workspaces</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-border text-left">
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Workspace</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Status</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Plan</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Tickets</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Open</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Agents</th>
+                <th class="px-6 py-3 text-[10px] font-mono font-medium text-muted uppercase tracking-widest">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ws-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /dashboard-page -->
+
+    <!-- Workspaces page (rendered by workspaces.js) -->
+    <div id="ws-page" class="hidden"></div>
+
+  </main>
+
+  <script src="../../scripts/sidebar.js"></script>
+  <script src="../../scripts/ownerDashboard.js"></script>
+  <script src="../workspace/workSpace.js"></script>
+</body>
+</html>

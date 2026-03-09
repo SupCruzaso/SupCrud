@@ -1,0 +1,15 @@
+{
+  "name": "supcrud-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for SupCrud by Crudzaso",
+  "type": "module",
+  "scripts": {
+    "dev": "tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/output.css --watch",
+    "build": "tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/output.css --minify"
+  },
+  "author": "Crudzaso Team",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^4.2.1"
+  }
+}
